@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let sql = "./1.1/nginx部署.md";
+      console.log(sql);
+      Ajax(sql);
+      function Ajax(sql) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("get", sql);
+        xhr.send();
+        xhr.onload = () => {
+          if (xhr.readyState === 4) {
+            let data = xhr.responseText;
+            console.log(data);
+          }
+        };
+      }
+      let data = {
+        name: "1212",
+        age: 18,
+        wife: {
+          name: "898989",
+        },
+      };
+      let datao = deepClone(data);
+      datao.wife.name = "9999999";
+      //深拷贝
+      function deepClone(obj) {
+        if (typeof obj !== "object" || obj == null) return obj;
+        let result;
+        if (obj instanceof Array) {
+          result = [];
+        } else {
+          result = {};
+        }
+        for (const key in obj) {
+          result[key] = deepClone(obj[key]);
+        }
+        return result;
+      }
+      console.log(data);
+      console.log(datao);
+      function onj() {
+        this.cname = "000";
+        function show() {
+          console.log(cname);
+        }
+      }
+      let okl = new onj();
+      console.log(okl.cname);
+    </script>
+  </body>
+</html>

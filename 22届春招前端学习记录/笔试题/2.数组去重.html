@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let List = [11, 11, 11, 4, 4, 89, 88, 99, 666, 666, 666];
+      //1.set去重
+      let newList = [...new Set(List)];
+      console.log(newList);
+      //2.reduce去重
+      let newList2 = List.reduce((pre, cur) => {
+        if (!pre.includes(cur)) {
+          pre.push(cur);
+        }
+        return pre;
+      }, []);
+      console.log(newList2);
+      //  3.for循环数组去重
+      let newList3 = [];
+      for (let i = 0; i < List.length; i++) {
+        if (newList3.indexOf(List[i]) === -1) {
+          newList3.push(List[i]);
+        }
+      }
+      console.log(newList3);
+      // let newArr = [];
+      // for (let i = 0; i < List.length; i++) {
+      //   for (let k = 0; k < newArr.length; k++) {
+      //     if (List[i] == newArr[k]) {
+      //       break;
+      //     }
+      //     //拿到原数组的某个元素比较到新数组的最后一个元素还没有重复
+      //     if (k == newArr.length - 1) {
+      //       //数据插入
+      //       newArr.push(arr[i]);
+      //     }
+      //   }
+      // }
+      // console.log(newArr);
+    </script>
+  </body>
+</html>

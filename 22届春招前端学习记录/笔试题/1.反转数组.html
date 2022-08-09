@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let list = [1, 23, 54, 878, 7, 88, 999];
+      //1.二分法
+      for (let i = 0; i < list.length / 2; i++) {
+        let temp = list[i];
+        list[i] = list[list.length - 1 - i];
+        list[list.length - 1 - i] = temp;
+      }
+      console.log(list);
+      //2.reduce
+      list.reduce((pre, cur) => {
+        return [cur, ...pre];
+      }, []);
+      //3.for+shift循环
+      let arr0 = [];
+      for (let i = 0; i < list.length; i++) {
+        arr0.unshift(list[i]);
+      }
+      console.log(arr0);
+    </script>
+  </body>
+</html>

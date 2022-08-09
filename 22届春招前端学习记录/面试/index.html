@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        height: 2000px;
+      }
+      /* #app {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      #app > div {
+        height: 100px;
+        width: 100px;
+        background-color: yellow;
+      } */
+      input {
+        width: 200px;
+        height: 20px;
+      }
+    </style>
+  </head>
+  <script src="./index.js"></script>
+  <body>
+    <input type="text" />
+    <div id="app">
+      <div></div>
+    </div>
+  </body>
+  <script>
+    let input = document.querySelector("input");
+    input.oninput = deBalance(() => {
+      console.log("事件触发");
+    }, 1000);
+    function deBalance(fn, delay) {
+      let timer = null;
+      return function () {
+        if (timer != null) {
+          clearTimeout(timer);
+        }
+        timer = setTimeout(() => {
+          fn();
+        }, delay);
+      };
+    }
+    window.onscroll = cutl(() => {
+      console.log("触发事件2");
+    }, 2000);
+    function cutl(fn, delay) {
+      let flag = true;
+      return function () {
+        if (flag) {
+          setTimeout(() => {
+            fn();
+            flag = true;
+          }, delay);
+        }
+        flag = false;
+      };
+    }
+  </script>
+</html>

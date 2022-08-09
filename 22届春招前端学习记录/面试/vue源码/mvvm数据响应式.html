@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let obj = {
+        name: "",
+        age: 88,
+        wife: {
+          name: "00",
+        },
+      };
+      observer(obj);
+      function observer(target) {
+        if (typeof target !== "object" || target == null) return target;
+
+        for (let i in target) {
+          derecativeProtope(target, i, target[i]);
+        }
+        function derecativeProtope(target, i, value) {
+          observer(value);
+          Object.defineProperty(target, i, {
+            get() {
+              console.log("this is get");
+              return value;
+            },
+            set(newval) {
+              observer(newval);
+              if (value !== newval) {
+                console.log("this a change");
+                value = newval;
+              }
+            },
+          });
+        }
+      }
+      obj.name = "66666";
+      obj.wife.name = "33333";
+      console.log(obj);
+      let obj2 = {
+        name: "00000000000",
+        age: 33333333333333,
+        color: {
+          V: 0,
+        },
+      };
+      //vue2的数据劫持
+      observer(obj2);
+      function observer(target) {
+        if (typeof target !== "object" || target == null) return target;
+        //遍历
+        for (const key in target) {
+          updateDefineProtype(target, key, target[key]);
+        }
+        function updateDefineProtype(target, key, value) {
+          //深度监听
+          observer(value);
+          //数据劫持
+          Object.defineProperty(target, key, {
+            get() {
+              console.log("this is a get-ing");
+              return value;
+            },
+            set(newValue) {
+              console.log("this is a set-ing");
+              //深度遍历
+              observer(newValue);
+              if (value !== newValue) value = newValue;
+            },
+          });
+        }
+      }
+      obj2.name = "8888888888888888888";
+      obj2.color.V = "2222222222222";
+      console.log(obj2);
+    </script>
+  </body>
+</html>

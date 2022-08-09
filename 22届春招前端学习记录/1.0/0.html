@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        height: 2000px;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="text" />
+    <div id="sign"></div>
+    <h1>下滑</h1>
+    <script>
+      //防抖：按钮重复点击需要限制触发频率
+      let input = document.querySelector("input");
+      input.oninput = debance(function () {
+        console.log(this);
+        console.log(this.value);
+      }, 2000);
+
+      function debance(fn, delay) {
+        let timer = null;
+        return function () {
+          if (timer != null) {
+            clearTimeout(timer);
+          }
+          timer = setTimeout(() => {
+            fn.call(this);
+          }, delay);
+        };
+      }
+      //（控制执行次数）
+      window.onscroll = reduce(() => {
+        console.log(00000);
+      }, 2000);
+
+      function reduce(fn, delay) {
+        let flag = true;
+        return function () {
+          if (flag) {
+            setTimeout(() => {
+              fn();
+              flag = true;
+            }, delay);
+          }
+          flag = false;
+        };
+      }
+      let obj = {
+        name: "sdsd",
+        age: 18,
+        wife: {
+          name: "546546",
+        },
+      };
+      function deepClone(obj) {
+        console.log(Object.prototype.toString.call(obj));
+        if (typeof obj !== "object" || obj == null) return obj;
+        let res;
+        if (res instanceof Array) {
+          res = [];
+        }
+        if (Object.prototype.toString.call(obj) == "[object Object]") {
+          res = {};
+        }
+        for (let i in obj) {
+          res[i] = deepClone(obj[i]);
+        }
+        return res;
+      }
+
+      let obj2 = deepClone(obj);
+      obj2.name = "s";
+      console.log(obj);
+      console.log(obj2);
+    </script>
+  </body>
+</html>

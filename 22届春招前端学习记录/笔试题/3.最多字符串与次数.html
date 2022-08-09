@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let str = "hellohellhhhhohello00";
+      let map = new Map();
+      for (let i = 0; i < str.length; i++) {
+        //value:size
+        if (!map.has(str[i])) {
+          map.set(str[i], 1);
+        } else {
+          //map.get方法可以获得集合对象的value(value为次数);
+          let count = map.get(str[i]);
+          map.set(str[i], count + 1);
+        }
+      }
+      console.log(map);
+      let max = 0;
+      map.forEach((item, index, arr) => {
+        max = Math.max(item, max);
+      });
+      //把map集合中,次数集合转化成一个数组；
+      let arr = Array.from(map.values());
+      //得到最大数的index索引;
+      let b = arr.indexOf(max);
+      //把map集合的键(字符串),转化成一个数组；
+      let arr1 = Array.from(map.keys());
+      console.log("最多字符串" + arr1[b], "出现次数" + max);
+    </script>
+  </body>
+</html>

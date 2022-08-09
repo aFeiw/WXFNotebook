@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>promise</title>
+  </head>
+  <body>
+    <script>
+      const PENDING = "pending";
+      const RESOLVE = "resolve";
+      const REJECT = "reject";
+      class myPromise {
+        constructor(callBackPromise) {
+          this.data = undefined;
+          this.value = undefined;
+          this.state = PENDING;
+          this.dataList = [];
+          this.errList = [];
+          const resolve = (data) => {
+            if (this.state == PENDING) {
+              this.state = RESOLVE;
+              this.data = data;
+              this.dataList.forEach((fn) => fn());
+            }
+          };
+          const reject = (value) => {
+            if (this.state == PENDING) {
+              this.state = REJECT;
+              this.value = value;
+              this.errList.forEach((fn) => {
+                fn();
+              });
+            }
+          };
+
+          try {
+            callBackPromise(resolve, reject);
+          } catch (error) {
+            reject(error);
+          }
+        }
+        then(res, err) {
+          if (this.state == RESOLVE) {
+            console.log("res触发ing");
+            res(this.data);
+          }
+          if (this.state == REJECT) {
+            console.log("err触发ing");
+            err(this.value);
+          }
+          if (this.state == PENDING) {
+            console.log("pendind触发ing");
+            this.dataList.push(() => {
+              res(this.data);
+            });
+            this.errList.push(() => {
+              err(this.value);
+            });
+          }
+        }
+      }
+      let promise = new myPromise((resolve, reject) => {
+        // reject("failed");
+        setTimeout(() => {
+          resolve("success");
+        }, 1000);
+      });
+      promise.then(
+        (res) => {
+          console.log(res);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    </script>
+  </body>
+</html>

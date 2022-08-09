@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //------------1------------
+      //利用for循环得到字符串数组,二分法翻转数组,再转化为字符
+      let str = "hello word";
+      console.log(str);
+      let arr = [];
+      for (let i = 0; i < str.length; i++) {
+        arr.push(str[i]);
+      }
+      for (let i = 0; i < arr.length / 2; i++) {
+        let temp = arr[i];
+        arr[i] = arr[arr.length - 1 - i];
+        arr[arr.length - 1 - i] = temp;
+      }
+      //数组转化为字符串的方法
+      // let newArr = arr.toString();
+      let newArr = arr.join("");
+      console.log(newArr);
+      //-----------2------------
+      let strGoo = " i love you ";
+      let arrStr = [];
+      for (const value of strGoo) {
+        arrStr.push(value);
+      }
+      console.log(arrStr.reverse().join(""));
+      //-----------3----------------
+      console.log(strGoo.split("").reverse().join(""));
+    </script>
+  </body>
+</html>

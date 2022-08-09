@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let str = "slfdohesucvuksdhvlcdv,m;dsjvijd";
+      let map = new Map();
+      for (let i = 0; i < str.length; i++) {
+        if (!map.has(str[i])) {
+          map.set(str[i], 1);
+        } else {
+          let count = map.get(str[i]);
+          map.set(str[i], count + 1);
+        }
+      }
+      console.log(map);
+      let max = 0;
+      map.forEach((item, index) => {
+        max = Math.max(item, max);
+      });
+      console.log(max);
+      let arr = Array.from(map.values());
+      let index = arr.indexOf(max);
+      let newArr = Array.from(map.keys());
+      console.log("字符最多" + newArr[index], "出现次数" + max);
+
+      //------------------
+      let list = [1, 23, 45654, 48, 7, 9899, 9, 97, 446, 97899798, 955];
+
+      // for (let i = 0; i < list.length; i++) {
+      //   for (let j = i + 1; j < list.length; j++) {
+      //     if (list[i] > list[j]) {
+      //       let temp = list[i];
+      //       list[i] = list[j];
+      //       list[j] = temp;
+      //     }
+      //   }
+      // }
+      // console.log(list);
+      //
+      let arr0 = [1, 2, 4, 54, 87, 84, 55];
+      for (let i = 0; i < arr0.length / 2; i++) {
+        let temp = arr0[i];
+        arr0[i] = arr0[arr0.length - 1 - i];
+        arr0[arr0.length - 1 - i] = temp;
+      }
+      console.log(arr0);
+
+      let str0 = "clkfshdichdh";
+      let arr8 = str0.split("");
+      console.log(arr8);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //使用setTimeout实现setInterval
+      // 使用递归函数，不断地去执行setTimeout从而达到setInterval的效果
+      /**
+      * setTimeout(执行代码，延迟时间)
+        setInterval(执行代码，延迟时间))
+      */
+
+      function myInterval(fn, delay) {
+        function interval() {
+          setTimeout(interval, delay);
+          fn();
+        }
+        interval();
+      }
+      myInterval(() => {
+        document.write("-");
+      }, 1000);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const arr = [30, 32, 6, 24, 37, 32, 45, 21, 38, 23, 47];
+      function quickSort(arr) {
+        if (arr.length <= 1) {
+          return arr;
+        }
+        let temp = arr[0];
+        const left = [];
+        const right = [];
+        for (var i = 1; i < arr.length; i++) {
+          if (arr[i] > temp) {
+            right.push(arr[i]);
+          } else {
+            left.push(arr[i]);
+          }
+        }
+        return quickSort(left).concat([temp], quickSort(right));
+      }
+
+      console.log(quickSort(arr));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数组排序</title>
+  </head>
+  <body>
+    <script>
+      let list = [1, 200, 35, 4, 8, 99, 88, 666, 888];
+      //------------1-------------
+      // console.log(list.sort((a, b) => a - b));
+      //------------2-------------
+      for (let i = 0; i < list.length; i++) {
+        for (let j = i + 1; j < list.length; j++) {
+          if (list[i] > list[j]) {
+            let temp = list[i];
+            list[i] = list[j];
+            list[j] = temp;
+          }
+        }
+      }
+      console.log(list);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vue</title>
+  </head>
+  <!-- // Vue 实现响应式的一个核心 API 是 `Object.defineProperty`。该方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象。 -->
+
+  <body>
+    <script>
+      // 一、
+      const data = {};
+      let name = "王兴飞";
+      // 参数:1.obj(要定义属性的对象。)
+      // 2.prop(要定义或修改的属性的名称或 Symbol )
+      // descriptor(要定义或修改的属性描述符。)
+      Object.defineProperty(data, "name", {
+        get: function () {
+          console.log("get函数被执行了");
+          return name;
+        },
+        set: function (newValue) {
+          console.log("set函数被执行了");
+          //视图重新渲染改变
+          name = newValue;
+        },
+      });
+      // console.log(data.name);
+      // data.name = "帅气";
+      // console.log(data.name);
+      // --------------------------------
+      //  二、
+      let data2 = {
+        name: "王兴飞",
+        age: 18,
+        wife: {
+          name: "erath",
+          age: 9999,
+        },
+      };
+      //将上述对象变成响应式数据
+      observer(data2);
+      function observer(target) {
+        if (typeof target !== "object" || target === null) {
+          return target;
+        }
+        //如果满足条件，它们是对象
+        for (let key in target) {
+          defineReactive(target, key, target[key]);
+        }
+        function defineReactive(target, key, value) {
+          // console.log(key);
+          observer(value); //如果对象里还有对象
+          // console.log(key);
+          Object.defineProperty(target, key, {
+            get() {
+              return value;
+            },
+            set(newValue) {
+              observer(newValue); //深度监听
+              if (newValue !== value) {
+                value = newValue;
+              }
+              console.log("object+更新视图了");
+            },
+          });
+        }
+      }
+      data2.name = "独孤小刁";
+      data2.wife.age = 9999999;
+      console.log(data2);
+      // 注意：Object.defineprotype()无法进行属性的删除和新增，只能使用其他的api
+      // --------------------------------
+      //  三、
+      let data3 = {
+        name: "123",
+        color: ["i", "l", "o"],
+      };
+      const oldArrayProto = Array.prototype;
+      const newArrProto = Object.create(oldArrayProto);
+      ["push", "pop", "splice"].forEach((methodName) => {
+        newArrProto[methodName] = function () {
+          console.log("更新视图");
+          oldArrayProto[methodName].call(this, ...arguments);
+        };
+      });
+      resolve2(data3);
+      function resolve2(target) {
+        if (typeof target !== "object" || target !== null) {
+          return target;
+        }
+        if (target.isArray(target)) {
+          target.__proto__ = newArrProto;
+        }
+        for (let key in target) {
+          defineReactive(target, key, target[key]);
+        }
+        function defineReactive(target, key, value) {
+          resolve2(value);
+          Object.defineProperty(target, key, {
+            get: function () {
+              console.log("1");
+              return target;
+            },
+            set: function (newValue) {
+              console.log("2");
+              resolve2(newValue);
+              if (value !== newValue) {
+                value = newValue;
+              }
+            },
+          });
+        }
+      }
+      data3.name = "王大大";
+      data3.color[0] = "red";
+      data3.color.push("yellow");
+      console.log(data3);
+    </script>
+  </body>
+</html>

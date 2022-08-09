@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 一.promise的具体实现
+      // 1.定义标识状态
+      const PENDING = "PENDING";
+      const RESOLVE = "RESOLVE";
+      const REJECT = "REJECT";
+      class Promise {
+        constructor(callBackExector) {
+          //初始化默认状态
+          this.state = PENDING;
+          //数据默认
+          this.data = undefined; //成功信息
+          this.errData = undefined; //失败信息
+          //处理异步收集数据
+          this.resolveList = [];
+          this.rejectList = [];
+          const resolve = (value) => {
+            //成功的数据保存以及状态更新
+            //只能通过pending，且改变一次
+            if (this.state == PENDING) {
+              this.data = value;
+              this.state = RESOLVE;
+              //遍历
+              this.resolveList.forEach((fn) => fn());
+            }
+          };
+          const reject = (errValue) => {
+            //失败的数据保存以及状态更新
+            if (this.state == PENDING) {
+              this.errData = errValue;
+              this.state = REJECT;
+              this.rejectList.forEach((fn) => fn());
+            }
+          };
+          //触发改变回调函数
+          // callBackExector(resolve, reject);
+          try {
+            callBackExector(resolve, reject);
+          } catch (err) {
+            reject(err);
+          }
+        }
+        then(res, err) {
+          if (this.state == RESOLVE) {
+            console.log("success-data");
+            res(this.data);
+          }
+          if (this.state == REJECT) {
+            console.log("faild-data");
+            err(this.errData);
+          }
+          if (this.state == PENDING) {
+            console.log("pending.....");
+            //成功或者失败收集
+            this.resolveList.push(() => {
+              res(this.data);
+            });
+            this.rejectList.push(() => {
+              err(this.errData);
+            });
+          }
+        }
+      }
+      //使用Promise
+      let promise = new Promise((resolve, reject) => {
+        reject("err");
+        setTimeout(() => {
+          resolve("ok");
+        }, 1000);
+      });
+      promise.then(
+        (data) => {
+          console.log(data);
+        },
+        (errData) => {
+          console.log(errData);
+        }
+      );
+    </script>
+  </body>
+</html>
