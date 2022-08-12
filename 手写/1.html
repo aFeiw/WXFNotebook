@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>测试用例</title>
+    <script src="./1.js"></script>
+    <style>
+      body{
+        height: 1999px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- <h1>---------防抖input演示------------</h1>
+    <input ></input>
+    <div id="sign">5201314</div>
+    <h1>---------节流向下滑scroll------------</h1>
+  <script> 
+      let div = document.querySelector("div");
+      let url = "./mock.json";
+      myAjax(url);
+      let timer = myInterval(() => {
+        document.write("%");
+      }, 1000);
+      // ---------防抖------------
+      let input = document.querySelector("input")
+      let sic = document.querySelector("#sign")
+      input.oninput = deBounce(()=>{
+      
+        console.log("事件触发");
+        if(sic.innerHTML==input.value){
+          sic.innerHTML='收到！'
+        } 
+        
+      })
+      // ---------节流------------
+      window.onscroll=throttle(()=>{
+         console.log("00000");
+      })
+  -->
+
+    </script>
+    <script>
+      console.log(lengthOfLIS([10,9,2,5,3,7,101,18]));
+    function lengthOfLIS(nums) {
+    if(nums.length <= 1) return nums.length;
+    let dp = new Array(nums.length).fill(1);
+    console.log(dp);
+    let res = 0;
+    for(let i = 1;i<nums.length;i++){
+        for(let j = 0;j<i;j++){
+            if(nums[i]>nums[j]){
+                dp[i] = Math.max(dp[i],dp[j]+1)
+                console.log(dp[i]);
+            }
+        }
+        if(dp[i]>res) res = dp[i];
+    }
+    return res;
+};
+
+
+ 
+ 
+    </script>
+     
+  </body>
+</html>
